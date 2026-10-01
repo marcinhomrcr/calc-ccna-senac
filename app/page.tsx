@@ -236,15 +236,19 @@ export default function Home() {
             {errorMsg && <p className="text-red-400 text-xs mt-1">{errorMsg}</p>}
           </div>
 
-          <div className="flex items-center justify-center relative py-2">
+          <div className="flex flex-col items-center justify-center relative py-4 gap-1">
             <div className="absolute h-px bg-white/10 w-full top-1/2 left-0 -translate-y-1/2"></div>
             <button
               onClick={() => setIsReversed(!isReversed)}
-              className="relative z-10 bg-slate-700 hover:bg-blue-500 text-white p-3 rounded-full shadow-lg transition-transform hover:rotate-180 border border-white/10"
+              className="relative z-10 bg-slate-700 hover:bg-blue-500 text-white p-3 rounded-full shadow-lg transition-all hover:scale-105 active:scale-95 border border-white/10"
               aria-label="Inverter conversão"
+              title="Clique para inverter (Ex: Hexadecimal para Decimal)"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 10v12" /><path d="M11 18l-4 4-4-4" /><path d="M17 14V2" /><path d="M13 6l4-4 4 4" /></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`${isReversed ? 'rotate-180' : ''} transition-transform duration-300`}><path d="M7 10v12" /><path d="M11 18l-4 4-4-4" /><path d="M17 14V2" /><path d="M13 6l4-4 4 4" /></svg>
             </button>
+            <span className="text-[10px] text-slate-400 font-medium tracking-wider uppercase bg-slate-800 px-3 py-1 rounded-full z-10 border border-white/5 shadow-sm">
+              Inverter direção
+            </span>
           </div>
 
           <div className="flex flex-col gap-2">
