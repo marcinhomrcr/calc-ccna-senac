@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 
-type ConversionType = "dec-bin" | "dec-hex" | "ip-bin";
+type ConversionType = "dec-bin" | "dec-hex" | "ip-bin" | "bin-hex";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<ConversionType>("dec-bin");
@@ -114,6 +114,35 @@ export default function Home() {
             ]
           };
         }
+      } else if (type === "bin-hex") {
+        if (!reversed) {
+          // Binary to Hexadecimal
+          if (!/^[01]+$/.test(cleanVal)) throw new Error("Apenas 0s e 1s são permitidos.");
+          const num = BigInt("0b" + cleanVal);
+          const hex = num.toString(16).toUpperCase();
+          const binFmt = formatBinary(cleanVal);
+          return {
+            result: hex,
+            steps: [
+              `Binário fornecido: ${binFmt}`,
+              `Agrupando os bits (4 em 4) e convertendo para base 16: ${hex}.`
+            ]
+          };
+        } else {
+          // Hexadecimal to Binary
+          if (!/^[0-9A-Fa-f]+$/.test(cleanVal)) throw new Error("Apenas caracteres hexadecimais válidos.");
+          const num = BigInt("0x" + cleanVal);
+          const binRaw = num.toString(2);
+          const binFmt = formatBinary(binRaw);
+          return {
+            result: binFmt,
+            steps: [
+              `Hexadecimal: ${cleanVal.toUpperCase()}`,
+              `Convertido para binário: ${binRaw}`,
+              `Formatado em blocos de 4 bits: ${binFmt}`
+            ]
+          };
+        }
       }
     } catch (err: any) {
       return { result: "", steps: [], errorMsg: err.message };
@@ -127,6 +156,7 @@ export default function Home() {
     if (activeTab === "dec-bin") return isReversed ? "Binário" : "Decimal";
     if (activeTab === "dec-hex") return isReversed ? "Hexadecimal" : "Decimal";
     if (activeTab === "ip-bin") return isReversed ? "IP Binário" : "IP Decimal (IPv4)";
+    if (activeTab === "bin-hex") return isReversed ? "Hexadecimal" : "Binário";
     return "";
   };
 
@@ -134,6 +164,7 @@ export default function Home() {
     if (activeTab === "dec-bin") return isReversed ? "Decimal" : "Binário";
     if (activeTab === "dec-hex") return isReversed ? "Decimal" : "Hexadecimal";
     if (activeTab === "ip-bin") return isReversed ? "IP Decimal (IPv4)" : "IP Binário";
+    if (activeTab === "bin-hex") return isReversed ? "Binário" : "Hexadecimal";
     return "";
   };
 
@@ -169,6 +200,7 @@ export default function Home() {
               { id: "dec-bin", label: "Dec ↔ Bin" },
               { id: "dec-hex", label: "Dec ↔ Hex" },
               { id: "ip-bin", label: "IP ↔ Bin" },
+              { id: "bin-hex", label: "Bin ↔ Hex" },
             ].map((tab) => (
               <button
                 key={tab.id}
