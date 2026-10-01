@@ -195,7 +195,7 @@ export default function Home() {
         </header>
 
         <main className="bg-slate-800/70 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-2xl flex flex-col gap-6">
-          <div className="flex bg-black/20 rounded-xl p-1 gap-1">
+          <div className="grid grid-cols-2 sm:flex bg-black/20 rounded-xl p-1 gap-1">
             {[
               { id: "dec-bin", label: "Dec ↔ Bin" },
               { id: "dec-hex", label: "Dec ↔ Hex" },
@@ -205,7 +205,7 @@ export default function Home() {
               <button
                 key={tab.id}
                 onClick={() => handleTabChange(tab.id as ConversionType)}
-                className={`flex-1 py-2 px-1 text-xs font-semibold rounded-lg transition-all ${activeTab === tab.id ? "bg-blue-500 text-white shadow-md" : "text-slate-400 hover:text-white"}`}
+                className={`flex-1 py-2 px-1 text-xs font-semibold rounded-lg transition-all whitespace-nowrap ${activeTab === tab.id ? "bg-blue-500 text-white shadow-md" : "text-slate-400 hover:text-white"}`}
               >
                 {tab.label}
               </button>
